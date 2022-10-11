@@ -62,7 +62,7 @@ namespace editor
             R = (byte)sliderR.SliderX;
             G = (byte)sliderG.SliderX;
             B = (byte)sliderB.SliderX;
-            A = (byte)sliderA.SliderX;
+            A = (byte)(255-sliderA.SliderX);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -70,7 +70,7 @@ namespace editor
             spriteBatch.Draw(background, new Vector2(X, Y), Color.White);
 
             spriteBatch.Draw(Game1.pixelTexture, new Vector2(X + 14, Y + 14), null,
-                new Color(R, G, B)*((float)(255-A)/255), 0f, new Vector2(0, 0),
+                new Color(R, G, B)*((float)A/255), 0f, new Vector2(0, 0),
                 111f, SpriteEffects.None, 0f);
 
             sliderA.Draw(spriteBatch);
