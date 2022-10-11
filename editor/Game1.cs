@@ -1,6 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.VisualBasic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace editor
 {
@@ -10,6 +17,7 @@ namespace editor
         private SpriteBatch _spriteBatch;
         public static Texture2D pixelTexture;
         private Palette palette;
+        private List<Image> images;
 
         public Game1()
         {
@@ -34,6 +42,9 @@ namespace editor
 
             pixelTexture = Content.Load<Texture2D>("pixel");
             palette = new Palette(Content, 10, 10);
+
+            images = new List<Image>();
+            images.Add(new Image(Content, 1024, 1024, 448, 28));
         }
 
         protected override void Update(GameTime gameTime)
@@ -48,11 +59,12 @@ namespace editor
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(new Color(50, 50, 50));
+            GraphicsDevice.Clear(new Color(100, 100, 100));
 
             _spriteBatch.Begin();
 
             palette.Draw(_spriteBatch);
+            images[0].Draw(_spriteBatch);
 
             _spriteBatch.End();
 
