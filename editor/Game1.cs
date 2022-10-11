@@ -8,6 +8,8 @@ namespace editor
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        public static Texture2D pixelTexture;
+        private Palette palette;
 
         public Game1()
         {
@@ -22,7 +24,6 @@ namespace editor
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
 
             base.Initialize();
         }
@@ -31,15 +32,16 @@ namespace editor
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            pixelTexture = Content.Load<Texture2D>("pixel");
+            palette = new Palette(Content, 10, 10);
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            // TODO: Add your update logic here
+            
+            palette.Update(Content);
 
             base.Update(gameTime);
         }
@@ -48,7 +50,11 @@ namespace editor
         {
             GraphicsDevice.Clear(new Color(50, 50, 50));
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+
+            palette.Draw(_spriteBatch);
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }

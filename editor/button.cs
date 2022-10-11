@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-//I took it from another project, so style is not good
 namespace editor
 {
     public class Button
