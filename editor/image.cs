@@ -54,13 +54,24 @@ namespace editor
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            for (int i = 0; i < Width; i++)
+            int w = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            int h = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
+            int pidraw = 0, pjdraw = 0;
+
+            for (int i = 0; i < Width&&pidraw <= w; i++)
             {
-                for (int j = 0; j < Height; j++)
+                pjdraw = 0;
+
+                for (int j = 0; j < Height&&pjdraw<=h; j++)
                 {
                     spriteBatch.Draw(Game1.pixelTexture, new Vector2(i*Scale + DelayX, j*Scale + DelayY), null,
                         ColorSet[i, j], 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 0f);
+
+                    pjdraw = j * Scale + DelayY;
                 }
+
+                pidraw = i * Scale + DelayX;
             }
         }
 
