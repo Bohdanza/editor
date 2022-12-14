@@ -21,6 +21,8 @@ namespace editor
 
         private Palette palette;
         private List<Image> images;
+        private List<Tool> tools;
+        private int currentTool = 0;
 
         public Game1()
         {
@@ -36,6 +38,10 @@ namespace editor
         protected override void Initialize()
         {
             MousePrev = Mouse.GetState();
+
+            tools = new List<Tool>();
+            tools.Add(new Pencil());
+            tools.Add(new Filler());
 
             base.Initialize();
         }
@@ -55,11 +61,17 @@ namespace editor
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
+
             palette.Update(Content);
             images[0].Update(Content);
 
             var ks = Keyboard.GetState();
+
+            if (ks.IsKeyDown(Keys.P))
+                currentTool = 0;
+
+            if (ks.IsKeyDown(Keys.F))
+                currentTool = 1;
 
             if (ks.IsKeyDown(Keys.Up))
                 images[0].DelayY -= 5;
@@ -77,7 +89,14 @@ namespace editor
             {
                 Vector2 vct = images[0].GetScreenPos(MousePrev.X, MousePrev.Y);
 
-                images[0].ChangeColor((int)vct.X, (int)vct.Y, new Color(palette.R, palette.G, palette.B, palette.A));
+                if ((int)vct.X >= 0 && (int)vct.X < images[0].Width && (int)vct.Y >= 0 && (int)vct.Y < images[0].Height)
+                    tools[currentTool].UseAt(images[0], (int)vct.X, (int)vct.Y, 
+                        new Color(palette.R, palette.G, palette.B, palette.A));
+            }
+
+            if(ks.IsKeyDown(Keys.LeftControl)&& ks.IsKeyDown(Keys.S))
+            {
+                images[0].Save("image");
             }
 
             MousePrev = Mouse.GetState();

@@ -15,9 +15,24 @@ namespace editor
     {
         public virtual Texture2D Icon { get; protected set; }
 
-        public virtual void UseAt(Image image, int x, int y)
+        public virtual void Update(ContentManager contentManager)
+        { 
+        
+        }
+
+        public virtual void DrawInterface(SpriteBatch spriteBatch, int x, int y)
         {
 
+        }
+
+        public virtual void DrawIcon(SpriteBatch spriteBatch, int x, int y)
+        {
+
+        }
+
+        public virtual void UseAt(Image image, int x, int y, Color color)
+        {
+            
         }
     }
 }
