@@ -13,14 +13,44 @@ namespace editor
 {
     public class Pencil:Tool
     {
+        private int Radius=0, timeSinceLastRadiusChange=0;
+
         public Pencil()
         {
 
         }
 
+        public override void Update(ContentManager contentManager)
+        {
+            timeSinceLastRadiusChange++;
+
+            var ks = Keyboard.GetState();
+
+            if (timeSinceLastRadiusChange > 10)
+            {
+                if (ks.IsKeyDown(Keys.D9))
+                {
+                    timeSinceLastRadiusChange = 0;
+
+                    Radius -= 1;
+                    Radius = Math.Max(0, Radius);
+                }
+
+                if (ks.IsKeyDown(Keys.D0))
+                {
+                    timeSinceLastRadiusChange = 0;
+                    Radius += 1;
+                }
+            }
+
+            base.Update(contentManager);
+        }
+
         public override void UseAt(Image image, int x, int y, Color color)
         {
-            image.ChangeColor(x, y, color);
+            for(int i=Math.Max(0, x-Radius); i<=Math.Min(image.Width-1, x+Radius); i++)
+                for (int j = Math.Max(0, y - Radius); j <= Math.Min(image.Height-1, y + Radius); j++)
+                    image.ChangeColor(i, j, color);
         }
     }
 

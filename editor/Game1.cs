@@ -65,6 +65,8 @@ namespace editor
             palette.Update(Content);
             images[0].Update(Content);
 
+            tools[currentTool].Update(Content);
+
             var ks = Keyboard.GetState();
 
             if (ks.IsKeyDown(Keys.P))
